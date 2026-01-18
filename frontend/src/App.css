@@ -1,38 +1,66 @@
-.App {
-  text-align: center;
+/* App.css 전체 삭제 후 복사 붙여넣기 */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  overflow: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.hacking-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+/* 캔버스를 화면 전체에 꽉 채우고 맨 뒤로 보냄 */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; 
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login-box {
+  position: relative;
+  z-index: 10; /* 캔버스보다 위에 오도록 설정 */
+  background: rgba(0, 0, 0, 0.85); /* 약간 투명한 검정 */
+  border: 2px solid #0f0;
+  padding: 40px;
+  box-shadow: 0 0 20px #0f0;
+  text-align: center;
+  color: #0f0;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.hacking-input {
+  background: transparent;
+  border: 1px solid #0f0;
+  color: #0f0;
+  display: block;
+  margin: 15px auto;
+  padding: 10px;
+  width: 250px;
+  outline: none;
+}
+
+.hacking-button {
+  background: #0f0;
+  color: #000;
+  border: none;
+  padding: 10px 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.hacking-button:hover {
+  background: #003300;
+  color: #0f0;
 }
