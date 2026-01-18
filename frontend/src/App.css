@@ -1,11 +1,22 @@
-/* App.css 전체 삭제 후 복사 붙여넣기 */
+/* 전체 레이아웃 초기화 */
 body, html {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
   background-color: black;
-  overflow: hidden;
+  overflow: hidden; /* 로그인 페이지에서는 스크롤 방지 */
+}
+
+/* 캔버스 설정: 모바일에서도 무조건 화면 전체를 채우도록 설정 */
+canvas {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: -1 !important; /* 배경으로 밀기 */
+  display: block;
 }
 
 .hacking-container {
@@ -15,30 +26,23 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-/* 캔버스를 화면 전체에 꽉 채우고 맨 뒤로 보냄 */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0; 
+  z-index: 1;
 }
 
 .login-box {
   position: relative;
-  z-index: 10; /* 캔버스보다 위에 오도록 설정 */
-  background: rgba(0, 0, 0, 0.85); /* 약간 투명한 검정 */
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.8); /* 배경이 살짝 보이도록 투명도 조절 */
   border: 2px solid #0f0;
   padding: 40px;
   box-shadow: 0 0 20px #0f0;
   text-align: center;
   color: #0f0;
   font-family: 'Courier New', Courier, monospace;
+  width: 320px; /* 기본 너비 설정 */
 }
 
+/* 입력창 및 버튼 스타일 */
 .hacking-input {
   background: transparent;
   border: 1px solid #0f0;
@@ -46,7 +50,7 @@ canvas {
   display: block;
   margin: 15px auto;
   padding: 10px;
-  width: 250px;
+  width: 80%;
   outline: none;
 }
 
@@ -57,10 +61,17 @@ canvas {
   padding: 10px 25px;
   cursor: pointer;
   font-weight: bold;
-  transition: 0.3s;
+  width: 85%;
 }
 
-.hacking-button:hover {
-  background: #003300;
-  color: #0f0;
+/* 모바일 전용 대응 */
+@media (max-width: 768px) {
+  .login-box {
+    width: 80%; /* 모바일에서 박스 너비 조절 */
+    padding: 20px;
+  }
+  
+  .glitch {
+    font-size: 1.5rem;
+  }
 }
