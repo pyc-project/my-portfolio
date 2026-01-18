@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import MatrixRain from './js/Matrix'; 
+import axios from 'axios';
 
 function App() {
   const [isPending, setIsPending] = useState(false); 
@@ -15,48 +16,26 @@ function App() {
       return;
     }
 
-    try {
-      const response = await fetch('http://localhost:8080/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: id,
-          password: password
-        }),
-      });
+  try {
+        // 2. 백엔드(VMware 리눅스) 공인 IP로 요청 전송
+        const response = await axios.post('http://125.176.211.131:8080/api/login', 
+            {
+                username: id,
+                password: password
+            }, 
+            {
+                headers: { 'Content-Type': 'application/json' }
+            }
+        );
 
-      if (response.ok) {
-        alert("CREDENTIALS ACCEPTED. ADMIN NOTIFICATION SENT.");
-        setIsPending(true);
-      } else {
-        alert("ACCESS DENIED: INVALID CREDENTIALS");
-      }
+        // 3. 서버 응답 결과 확인
+        if (response.data.result === 'SUCCESS') {
+            alert("Handshake Successful. Verification Required.");
+            setIsPending(true); // 성공 시 2단계 인증창으로 전환
+        }
     } catch (error) {
-      console.error("Connection Error:", error);
-      alert("SYSTEM ERROR: UNABLE TO REACH SERVER");
-    }
-  };
-
-  // 2. 인증번호 확인 요청
-  const handleVerify = async () => {
-    try {
-      const response = await fetch('/api/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: id,
-          authCode: authCode
-        }),
-      });
-
-      if (response.ok) {
-        alert("ACCESS GRANTED. WELCOME ADMIN.");
-        // 여기서 메인 포트폴리오 화면으로 이동하는 로직을 넣으시면 됩니다.
-      } else {
-        alert("CRITICAL ERROR: INVALID AUTH_CODE");
-      }
-    } catch (error) {
-      alert("SERVER ERROR: VERIFICATION FAILED");
+        console.error("Connection Failed:", error);
+        alert("ACCESS DENIED: Check your connection or credentials.");
     }
   };
 
@@ -96,7 +75,7 @@ function App() {
               style={{borderColor: '#ff0000', color: '#ff0000'}}
               onChange={(e) => setAuthCode(e.target.value)}
             />
-            <button className="hacking-button" onClick={handleVerify} style={{backgroundColor: '#440000'}}>
+            <button className="hacking-button"  style={{backgroundColor: '#440000'}}>
               VERIFY ACCESS
             </button>
             <button 
