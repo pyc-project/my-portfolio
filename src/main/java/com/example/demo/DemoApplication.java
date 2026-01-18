@@ -12,8 +12,8 @@ class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @GetMapping("/test")
+    @GetMapping("/testpage")
     public String test() {
-        return "Hello, Park Yong-cheon! This is running entirely on Ubuntu.";
+        return "내 포토폴리오 서버에 온걸 환영해";
     }
 }
